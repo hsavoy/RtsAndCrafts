@@ -10,12 +10,7 @@ This project aims to convert an image (e.g., of my cat) into paint-by-number ins
 
 * saving those resulting polygons with their color IDs as printable and readable instructions,
 
-This document follows the adventure of getting it all to work. The image we will start with is this one:
-
-```{r out.width = "50%", fig.align="center", echo=FALSE}
-plotRGB(brick("../images/byxbee_loaf.jpg") )
-```
-
+This document follows the adventure of getting it all to work.
 
 ## Packages being used
 
