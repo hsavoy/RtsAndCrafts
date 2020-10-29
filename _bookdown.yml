@@ -1,0 +1,6 @@
+book_filename: "index.Rmd"
+delete_merged_file: true
+view: https://github.com/hsavoy/RtsAndCrafts/blob/master/%s
+edit: https://github.com/hsavoy/RtsAndCrafts/edit/master/%s
+output_dir: "book"
+clean: ["R-packages.bib"]
