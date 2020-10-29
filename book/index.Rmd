@@ -15,7 +15,7 @@ github-repo: hsavoy/rtsAndCrafts
 # Preface
 
 This book catalogs different art projects that have been augmented (or overly-complicated?) by R. Many ideas come from conversations at the monthly Las Cruces/El Paso RLadies meetings. Hit me up if you want to join in.
-All code (including this book!) is available at hsavoy/rtsAndCrafts
+All code (including this book!) is available at hsavoy/rtsAndCrafts.
 
 
 ```{r include=FALSE}
