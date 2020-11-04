@@ -2,7 +2,7 @@
 
 ## Intro
 
-I'd like to re-do the backsplash in my kitchen. Its nice tile, but it's a lot of beige. I'd prefer some talavera tiles sprinkled in with white tiles. I'd like to have it be more random than a structured pattern, so I'm going to write some code to randomly generate the location of the colorful tiles. I'm also undecided about the relative size of the tiles I'd want, so I'll play with that here, too. 
+I'd like to re-do the backsplash in my kitchen. It's ok tile, but it's a lot of beige. I'd prefer some talavera tiles sprinkled in with white tiles. I'd like to have it be more random than a structured pattern, so I'm going to write some code to randomly generate the location of the colorful tiles. I'm also undecided about the relative size of the tiles I'd want, so I'll play with that here, too. 
 
 The area is like a tophat shape with two short rectangles on each side a taller and more square shape in the center. I'm going to assume that I only want square tiles so I'll be using rasters to represent the tiles. I just won't be able to visualize grout this way.
 
