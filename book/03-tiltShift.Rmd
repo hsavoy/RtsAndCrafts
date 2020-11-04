@@ -1,0 +1,31 @@
+# Mimicking Tilt-Shift Photography  {#tiltShift}
+
+## Intro
+
+
+## Packages being used
+
+```{r message=FALSE}
+
+```
+
+### Step 1: Read in the image
+
+This will work best if the images we are manipulating have objects near the middle of the image to which we can draw the audience's attention.
+
+```{r }
+   
+```
+
+### Step 2: Define the focal area
+
+Basically, we will specify the range of coordinates we want as the focal area (the locator function is handy here!). For simplicity, I'll draw a box over the object in the center of the image:
+
+### Step 3: Apply the blurring filter
+
+We will have a variable amount of blur: highest near the image borders and decreasing to zero as it approaches the focal area.
+
+### Step 4: Modifying the color saturation
+
+
+Any edge detection?

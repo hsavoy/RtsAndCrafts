@@ -1,4 +1,4 @@
-# Introduction {#paintByNumbers}
+# Auto-generating Paint-by-Numbers Instructions {#paintByNumbers}
 
 ## Intro
 
@@ -6,9 +6,9 @@ This project aims to convert an image (e.g., of my cat) into paint-by-number ins
 
 * reducing the number of colors down to a reasonable number, i.e. reducing the 16+ million colors possible with 8-bit images down to like 10-15,
 
-* converting raster data into polygons based on those limited colors,
+* converting raster data into polygons based on those limited colors, and
 
-* saving those resulting polygons with their color IDs as printable and readable instructions,
+* saving those resulting polygons with their color IDs as printable and readable instructions.
 
 This document follows the adventure of getting it all to work.
 
@@ -26,7 +26,8 @@ library(smoothr)
 ### Step 1: Reading in the image
 
 ```{r }
-img <- brick("../images/byxbee_loaf.jpg") 
+img <- brick("../images/byxbee_loaf.jpg") %>% 
+  aggregate(10) # reducing the resolution up front to save time
 plotRGB(img)
 ```
 
@@ -46,10 +47,74 @@ values(rounded_img) <- values(img)  %>%  # extract values from image (strip spat
 plotRGB(rounded_img)
 ```
 
+Well it worked in that we can still see the cat and there are <20 unique colors, but its not the ideal result. 
+
 ##### Attempt 2: using kmeans clustering 
+```{r message=FALSE, warning=FALSE}
+img_clust <- values(img) %>%
+  kmeans(15, iter.max = 50)
+centroids_img <- img
+values(centroids_img) <- img_clust$cluster  %>%
+  enframe(name = NULL) %>%
+  left_join(img_clust$centers %>% 
+              as_tibble(rownames = "value") %>%
+              mutate(value = as.numeric(value)))  %>%
+  mutate_all(~round(.,0)) %>%
+  as.matrix()
+
+plotRGB(centroids_img[[-1]]) # I'm skipping the first layer that contains the cluster ID
+```
+
+That's a bit better. But what if we have a set palette we want to use? 
 
 ##### Attempt 3: specifying a palette first
 
 I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the [Wes Anderson pallete](https://github.com/karthik/wesanderson) or matching to paint sets to make painting the printed result more feasible. 
 
-### Step 3: Reducing the number of colors
+### Step 3: Converting the image into polygons of the same color
+```{r message=FALSE}
+poly_img <- rasterToPolygons(centroids_img$value,
+                             digits = 0,
+                             dissolve = TRUE)
+```
+
+```{r}
+st_img <- poly_img %>%
+  st_as_sf() %>%
+  st_buffer(5) %>%
+  st_simplify(TRUE,dTolerance = 15) %>% 
+  #drop_crumbs(units::set_units(2)) %>%
+  smooth(method = "ksmooth", smoothness = 0.5) 
+
+clust_cols <- img_clust$centers %>% 
+  as_tibble(rownames = "value") %>%
+  mutate(hex = rgb(byxbee_loaf.1/255,byxbee_loaf.2/255,byxbee_loaf.3/255)) %>%
+  pull(hex)
+
+img_pal <- function(n){
+  return(clust_cols[1:n])
+}
+
+# Try to visualize what the painting would look like
+st_img %>%
+  plot(pal = img_pal,breaks=0:15,  # use the palette from the previous section
+       border = NA,  # no polygon outlines 
+       key.pos=NULL, # no legend
+       main = NULL)  # no title
+```
+
+So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to *ggplot* plotting because it's easier to customize visualizations.
+```{r}
+ggplot() +
+  geom_sf(fill = NA,
+       color = "black",
+       data = st_img)
+```
+
+Future expansions:
+
+ * Have an option to split skinny images (e.g. panoramic photos) into multiple pages of instructions, which would be helpful for breaking up mural instructions
+ 
+ * Have an option to have a grid included on the instructions in case people need to transfer the outlines to a large area, e.g. a wall for a mural
+ 
+ * Have an option to fit a custom piece of paper
