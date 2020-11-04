@@ -1,6 +1,6 @@
 # Auto-generating Paint-by-Numbers Instructions {#paintByNumbers}
 
-# Introduction
+## Introduction
 
 This project aims to convert an image (e.g., of my cat) into paint-by-number instructions. This involves:
 
@@ -12,7 +12,7 @@ This project aims to convert an image (e.g., of my cat) into paint-by-number ins
 
 This document follows the adventure of getting it all to work.
 
-# Packages being used
+## Packages being used
 
 The packages we load are all on CRAN. `raster` has handy functions for handling and viewing images, `sf` and `smoothr` help with handling the polygons, and `tidyverse` has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. Other packages needed for dependencies are `rgdal` and `rgeos`.
 
@@ -72,7 +72,7 @@ That's a bit better. But what if we have a set palette we want to use?
 
 I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the [Wes Anderson pallete](https://github.com/karthik/wesanderson) or matching to paint sets to make painting the printed result more feasible. 
 
-### Step 3: Converting the image into polygons of the same color
+## Step 3: Converting the image into polygons of the same color
 ```{r message=FALSE}
 poly_img <- rasterToPolygons(centroids_img$value,
                              digits = 0,
@@ -113,7 +113,7 @@ ggplot() +
   theme_map()  # no axes or anything like that
 ```
 
-Future expansions:
+## Future expansions:
 
  * Have an option to split skinny images (e.g. panoramic photos) into multiple pages of instructions, which would be helpful for breaking up mural instructions
  
