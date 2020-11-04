@@ -125,7 +125,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="tiltShift.html"><a href="tiltShift.html"><i class="fa fa-check"></i><b>4</b> Mimicking Tilt-Shift Photography</a><ul>
-<li class="chapter" data-level="4.1" data-path="tiltShift.html"><a href="tiltShift.html#intro"><i class="fa fa-check"></i><b>4.1</b> Intro</a></li>
+<li class="chapter" data-level="4.1" data-path="tiltShift.html"><a href="tiltShift.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
 <li class="chapter" data-level="4.2" data-path="tiltShift.html"><a href="tiltShift.html#packages-being-used-2"><i class="fa fa-check"></i><b>4.2</b> Packages being used</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="tiltShift.html"><a href="tiltShift.html#step-1-read-in-the-image"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Read in the image</a></li>
 <li class="chapter" data-level="4.2.2" data-path="tiltShift.html"><a href="tiltShift.html#step-2-define-the-focal-area"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Define the focal area</a></li>
@@ -169,14 +169,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(sf)
 <span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(smoothr)
-<span class="kw">library</span>(ggthemes)  <span class="co"># add to text above</span></code></pre></div>
+<span class="kw">library</span>(units)
+<span class="kw">library</span>(ggthemes)  <span class="co"># add to text above</span>
+<span class="kw">library</span>(wesanderson)
+<span class="kw">library</span>(rdist)</code></pre></div>
 </div>
 <div id="step-1-reading-in-the-image" class="section level2">
 <h2><span class="header-section-number">2.3</span> Step 1: Reading in the image</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">img &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="st">&quot;../images/byxbee_loaf.jpg&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">aggregate</span>(<span class="dv">10</span>) <span class="co"># reducing the resolution up front to save time</span>
+<span class="st">  </span><span class="kw">aggregate</span>(<span class="dv">25</span>) <span class="co"># reducing the resolution up front to save time</span>
 <span class="kw">plotRGB</span>(img)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 </div>
 <div id="step-2-reducing-the-number-of-colors" class="section level2">
 <h2><span class="header-section-number">2.4</span> Step 2: Reducing the number of colors</h2>
@@ -191,13 +194,14 @@ rounded_img &lt;-<span class="st"> </span>img  <span class="co"># make a copy of
 <span class="st">  </span><span class="kw">as.matrix</span>() <span class="co"># convert back to matrix</span>
 
 <span class="kw">plotRGB</span>(rounded_img)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
 <p>Well it worked in that we can still see the cat and there are &lt;20 unique colors, but its not the ideal result.</p>
 </div>
 <div id="attempt-2-using-kmeans-clustering" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Attempt 2: using kmeans clustering</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">img_clust &lt;-<span class="st"> </span><span class="kw">values</span>(img) %&gt;%
-<span class="st">  </span><span class="kw">kmeans</span>(<span class="dv">15</span>, <span class="dt">iter.max =</span> <span class="dv">50</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">8</span> <span class="co"># number of colors</span>
+img_clust &lt;-<span class="st"> </span><span class="kw">values</span>(img) %&gt;%
+<span class="st">  </span><span class="kw">kmeans</span>(N, <span class="dt">iter.max =</span> <span class="dv">50</span>)
 centroids_img &lt;-<span class="st"> </span>img
 <span class="kw">values</span>(centroids_img) &lt;-<span class="st"> </span>img_clust$cluster  %&gt;%
 <span class="st">  </span><span class="kw">enframe</span>(<span class="dt">name =</span> <span class="ot">NULL</span>) %&gt;%
@@ -208,53 +212,86 @@ centroids_img &lt;-<span class="st"> </span>img
 <span class="st">  </span><span class="kw">as.matrix</span>()
 
 <span class="kw">plotRGB</span>(centroids_img[[-<span class="dv">1</span>]]) <span class="co"># I&#39;m skipping the first layer that contains the cluster ID</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" width="672" /></p>
 <p>That's a bit better. But what if we have a set palette we want to use?</p>
 </div>
 <div id="attempt-3-specifying-a-palette-first" class="section level3">
 <h3><span class="header-section-number">2.4.3</span> Attempt 3: specifying a palette first</h3>
 <p>I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the <a href="https://github.com/karthik/wesanderson">Wes Anderson pallete</a> or matching to paint sets to make painting the printed result more feasible.</p>
+<p>An initial attempt with the Isle of Dogs palette:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">15</span>  <span class="co"># number of colors</span>
+(wes_pal &lt;-<span class="st"> </span><span class="kw">wes_palette</span>(<span class="st">&quot;IsleofDogs1&quot;</span>, N, <span class="dt">type =</span> <span class="st">&quot;continuous&quot;</span>))</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wes_rgb &lt;-<span class="st"> </span>wes_pal[<span class="dv">1</span>:N] %&gt;%
+<span class="st">  </span><span class="kw">col2rgb</span>() %&gt;%
+<span class="st">  </span><span class="kw">t</span>() 
+
+img_wes &lt;-<span class="st"> </span><span class="kw">values</span>(img) %&gt;%
+<span class="st">  </span><span class="kw">cdist</span>(wes_rgb) %&gt;%
+<span class="st">  </span><span class="kw">as_tibble</span>() %&gt;%
+<span class="st">  </span><span class="kw">rowwise</span>() %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cluster =</span> <span class="kw">which.min</span>(<span class="kw">c_across</span>(<span class="kw">everything</span>()))) %&gt;%
+<span class="st">  </span><span class="kw">pull</span>(cluster)
+
+def_pal_img &lt;-<span class="st"> </span>img
+<span class="kw">values</span>(def_pal_img) &lt;-<span class="st"> </span>img_wes  %&gt;%
+<span class="st">  </span><span class="kw">enframe</span>(<span class="dt">name =</span> <span class="ot">NULL</span>) %&gt;%
+<span class="st">  </span><span class="kw">left_join</span>(wes_rgb %&gt;%<span class="st"> </span>
+<span class="st">              </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;value&quot;</span>) %&gt;%
+<span class="st">              </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">as.numeric</span>(value)))  %&gt;%
+<span class="st">  </span><span class="kw">mutate_all</span>(~<span class="kw">round</span>(.,<span class="dv">0</span>)) %&gt;%
+<span class="st">  </span><span class="kw">as.matrix</span>()
+
+<span class="kw">plotRGB</span>(def_pal_img[[-<span class="dv">1</span>]])</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-144-2.png" width="672" /></p>
 </div>
 </div>
 <div id="step-3-converting-the-image-into-polygons-of-the-same-color" class="section level2">
 <h2><span class="header-section-number">2.5</span> Step 3: Converting the image into polygons of the same color</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly_img &lt;-<span class="st"> </span><span class="kw">rasterToPolygons</span>(centroids_img$value,
-                             <span class="dt">digits =</span> <span class="dv">0</span>,
-                             <span class="dt">dissolve =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly_img &lt;-<span class="st"> </span><span class="kw">rasterToPolygons</span>(def_pal_img$value,
+                             <span class="dt">dissolve =</span> <span class="ot">TRUE</span>,
+                             <span class="dt">digits =</span> <span class="dv">0</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">st_img &lt;-<span class="st"> </span>poly_img %&gt;%
 <span class="st">  </span><span class="kw">st_as_sf</span>() %&gt;%
 <span class="st">  </span><span class="kw">st_buffer</span>(<span class="dv">5</span>) %&gt;%
-<span class="st">  </span><span class="kw">st_simplify</span>(<span class="ot">TRUE</span>,<span class="dt">dTolerance =</span> <span class="dv">15</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="co">#drop_crumbs(units::set_units(2)) %&gt;%</span>
-<span class="st">  </span><span class="kw">smooth</span>(<span class="dt">method =</span> <span class="st">&quot;ksmooth&quot;</span>, <span class="dt">smoothness =</span> <span class="fl">0.5</span>) 
+<span class="st">  </span><span class="kw">st_simplify</span>(<span class="ot">TRUE</span>,<span class="dt">dTolerance =</span> <span class="dv">15</span>) %&gt;%<span class="st"> </span><span class="co">#simplifies lines by removing vertices</span>
+<span class="st">  </span><span class="co">#drop_crumbs(threshold = 10 ) %&gt;% # these sound applicable but I keep getting error messages!</span>
+<span class="st">  </span><span class="co">#fill_holes(threshold = 10) %&gt;%</span>
+<span class="st">  </span><span class="kw">smooth</span>(<span class="dt">method =</span> <span class="st">&quot;ksmooth&quot;</span>, <span class="dt">smoothness =</span> <span class="fl">0.5</span>) %&gt;%
+<span class="st">  </span><span class="kw">st_cast</span>(<span class="st">&quot;POLYGON&quot;</span>)
 
-clust_cols &lt;-<span class="st"> </span>img_clust$centers %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;value&quot;</span>) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hex =</span> <span class="kw">rgb</span>(byxbee_loaf<span class="fl">.1</span>/<span class="dv">255</span>,byxbee_loaf<span class="fl">.2</span>/<span class="dv">255</span>,byxbee_loaf<span class="fl">.3</span>/<span class="dv">255</span>)) %&gt;%
-<span class="st">  </span><span class="kw">pull</span>(hex)
-
-img_pal &lt;-<span class="st"> </span>function(n){
-  <span class="kw">return</span>(clust_cols[<span class="dv">1</span>:n])
-}
+<span class="co"># clust_cols &lt;- img_clust$centers %&gt;% </span>
+<span class="co">#   as_tibble(rownames = &quot;value&quot;) %&gt;%</span>
+<span class="co">#   mutate(hex = rgb(byxbee_loaf.1/255,byxbee_loaf.2/255,byxbee_loaf.3/255)) %&gt;%</span>
+<span class="co">#   pull(hex)</span>
+<span class="co"># </span>
+<span class="co"># img_pal &lt;- function(n){</span>
+<span class="co">#   return(clust_cols[1:n])</span>
+<span class="co"># }</span>
 
 <span class="co"># Try to visualize what the painting would look like</span>
 st_img %&gt;%
-<span class="st">  </span><span class="kw">plot</span>(<span class="dt">pal =</span> img_pal,<span class="dt">breaks=</span><span class="dv">0</span>:<span class="dv">15</span>,  <span class="co"># use the palette from the previous section</span>
+<span class="st">  </span><span class="kw">plot</span>(<span class="dt">pal =</span> wes_pal[<span class="dv">1</span>:N],<span class="dt">breaks=</span><span class="dv">0</span>:<span class="dv">15</span>,  <span class="co"># use the palette from the previous section</span>
        <span class="dt">border =</span> <span class="ot">NA</span>,  <span class="co"># no polygon outlines </span>
        <span class="dt">key.pos=</span><span class="ot">NULL</span>, <span class="co"># no legend</span>
        <span class="dt">main =</span> <span class="ot">NULL</span>)  <span class="co"># no title</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
 <p>So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to <code>ggplot</code> plotting because it's easier to customize visualizations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">st_img %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>() +
 <span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>,
-       <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
-       <span class="dt">data =</span> st_img) +
+       <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># draw lines for polygons</span>
+       <span class="dt">size =</span> <span class="fl">0.1</span>) +<span class="st"> </span><span class="co"># fine lines</span>
+<span class="st">  </span><span class="kw">geom_sf_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> value), <span class="co"># label color ID per polygon</span>
+               <span class="dt">size =</span> <span class="dv">1</span>) +<span class="st">  </span>
 <span class="st">  </span><span class="kw">theme_map</span>()  <span class="co"># no axes or anything like that</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+<p>This seems like a lot of polygons! We will have to iteratively tweak our simplifications.</p>
 </div>
 <div id="future-expansions" class="section level2">
 <h2><span class="header-section-number">2.6</span> Future expansions:</h2>
 <ul>
+<li><p>Consider using a machine learning classification approach?</p></li>
 <li><p>Have an option to split skinny images (e.g. panoramic photos) into multiple pages of instructions, which would be helpful for breaking up mural instructions</p></li>
 <li><p>Have an option to have a grid included on the instructions in case people need to transfer the outlines to a large area, e.g. a wall for a mural</p></li>
 <li><p>Have an option to fit a custom piece of paper</p></li>

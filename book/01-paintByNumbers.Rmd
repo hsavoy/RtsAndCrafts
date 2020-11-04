@@ -21,14 +21,17 @@ library(raster)
 library(sf)
 library(tidyverse)
 library(smoothr)
+library(units)
 library(ggthemes)  # add to text above
+library(wesanderson)
+library(rdist)
 ```
 
 ## Step 1: Reading in the image
 
 ```{r }
 img <- brick("../images/byxbee_loaf.jpg") %>% 
-  aggregate(10) # reducing the resolution up front to save time
+  aggregate(25) # reducing the resolution up front to save time
 plotRGB(img)
 ```
 
@@ -52,8 +55,9 @@ Well it worked in that we can still see the cat and there are <20 unique colors,
 
 ### Attempt 2: using kmeans clustering 
 ```{r message=FALSE, warning=FALSE}
+N <- 8 # number of colors
 img_clust <- values(img) %>%
-  kmeans(15, iter.max = 50)
+  kmeans(N, iter.max = 50)
 centroids_img <- img
 values(centroids_img) <- img_clust$cluster  %>%
   enframe(name = NULL) %>%
@@ -72,33 +76,67 @@ That's a bit better. But what if we have a set palette we want to use?
 
 I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the [Wes Anderson pallete](https://github.com/karthik/wesanderson) or matching to paint sets to make painting the printed result more feasible. 
 
-## Step 3: Converting the image into polygons of the same color
-```{r message=FALSE}
-poly_img <- rasterToPolygons(centroids_img$value,
-                             digits = 0,
-                             dissolve = TRUE)
+An initial attempt with the Isle of Dogs palette:
+
+```{r, message=FALSE}
+N <- 15  # number of colors
+(wes_pal <- wes_palette("IsleofDogs1", N, type = "continuous"))
+
+wes_rgb <- wes_pal[1:N] %>%
+  col2rgb() %>%
+  t() 
+
+img_wes <- values(img) %>%
+  cdist(wes_rgb) %>%
+  as_tibble() %>%
+  rowwise() %>%
+  mutate(cluster = which.min(c_across(everything()))) %>%
+  pull(cluster)
+
+def_pal_img <- img
+values(def_pal_img) <- img_wes  %>%
+  enframe(name = NULL) %>%
+  left_join(wes_rgb %>% 
+              as_tibble(rownames = "value") %>%
+              mutate(value = as.numeric(value)))  %>%
+  mutate_all(~round(.,0)) %>%
+  as.matrix()
+
+plotRGB(def_pal_img[[-1]])
+
 ```
 
-```{r}
+
+
+## Step 3: Converting the image into polygons of the same color
+```{r message=FALSE}
+poly_img <- rasterToPolygons(def_pal_img$value,
+                             dissolve = TRUE,
+                             digits = 0)
+```
+
+```{r, message=FALSE, warning=FALSE}
 st_img <- poly_img %>%
   st_as_sf() %>%
   st_buffer(5) %>%
-  st_simplify(TRUE,dTolerance = 15) %>% 
-  #drop_crumbs(units::set_units(2)) %>%
-  smooth(method = "ksmooth", smoothness = 0.5) 
+  st_simplify(TRUE,dTolerance = 15) %>% #simplifies lines by removing vertices
+  #drop_crumbs(threshold = 10 ) %>% # these sound applicable but I keep getting error messages!
+  #fill_holes(threshold = 10) %>%
+  smooth(method = "ksmooth", smoothness = 0.5) %>%
+  st_cast("POLYGON")
 
-clust_cols <- img_clust$centers %>% 
-  as_tibble(rownames = "value") %>%
-  mutate(hex = rgb(byxbee_loaf.1/255,byxbee_loaf.2/255,byxbee_loaf.3/255)) %>%
-  pull(hex)
-
-img_pal <- function(n){
-  return(clust_cols[1:n])
-}
+# clust_cols <- img_clust$centers %>% 
+#   as_tibble(rownames = "value") %>%
+#   mutate(hex = rgb(byxbee_loaf.1/255,byxbee_loaf.2/255,byxbee_loaf.3/255)) %>%
+#   pull(hex)
+# 
+# img_pal <- function(n){
+#   return(clust_cols[1:n])
+# }
 
 # Try to visualize what the painting would look like
 st_img %>%
-  plot(pal = img_pal,breaks=0:15,  # use the palette from the previous section
+  plot(pal = wes_pal[1:N],breaks=0:15,  # use the palette from the previous section
        border = NA,  # no polygon outlines 
        key.pos=NULL, # no legend
        main = NULL)  # no title
@@ -106,14 +144,21 @@ st_img %>%
 
 So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to `ggplot` plotting because it's easier to customize visualizations.
 ```{r}
-ggplot() +
+st_img %>%
+  ggplot() +
   geom_sf(fill = NA,
-       color = "black",
-       data = st_img) +
+       color = "black", # draw lines for polygons
+       size = 0.1) + # fine lines
+  geom_sf_text(aes(label = value), # label color ID per polygon
+               size = 1) +  
   theme_map()  # no axes or anything like that
 ```
 
+This seems like a lot of polygons! We will have to iteratively tweak our simplifications.
+
 ## Future expansions:
+
+ * Consider using a machine learning classification approach?
 
  * Have an option to split skinny images (e.g. panoramic photos) into multiple pages of instructions, which would be helpful for breaking up mural instructions
  

@@ -21,6 +21,6 @@ All code (including this book!) is available at hsavoy/rtsAndCrafts.
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown', "raster"
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', "raster", "smoothr"
 ), 'packages.bib')
 ```

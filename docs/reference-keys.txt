@@ -15,7 +15,7 @@ packages-being-used-1
 step-1-draw-the-backsplash-domain
 step-2-randomly-placing-talavera-tiles
 tiltShift
-intro
+introduction-2
 packages-being-used-2
 step-1-read-in-the-image
 step-2-define-the-focal-area
