@@ -1,6 +1,6 @@
 # Mimicking Tilt-Shift Photography  {#tiltShift}
 
-## Intro
+## Introduction
 
 
 ## Packages being used
