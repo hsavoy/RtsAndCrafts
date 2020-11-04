@@ -1,6 +1,6 @@
 # Randomly Generating Patterns  {#randomPatterns}
 
-## Intro
+## Introduction
 
 I'd like to re-do the backsplash in my kitchen. It's ok tile, but it's a lot of beige. I'd prefer some talavera tiles sprinkled in with white tiles. I'd like to have it be more random than a structured pattern, so I'm going to write some code to randomly generate the location of the colorful tiles. I'm also undecided about the relative size of the tiles I'd want, so I'll play with that here, too. 
 
