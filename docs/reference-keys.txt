@@ -8,13 +8,14 @@ attempt-1-just-rounding-the-individual-rgb-values
 attempt-2-using-kmeans-clustering
 attempt-3-specifying-a-palette-first
 step-3-converting-the-image-into-polygons-of-the-same-color
+future-expansions
 randomPatterns
-intro
+introduction-1
 packages-being-used-1
 step-1-draw-the-backsplash-domain
 step-2-randomly-placing-talavera-tiles
 tiltShift
-intro-1
+intro
 packages-being-used-2
 step-1-read-in-the-image
 step-2-define-the-focal-area
