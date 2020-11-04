@@ -14,7 +14,7 @@ This document follows the adventure of getting it all to work.
 
 # Packages being used
 
-The packages we load are all on CRAN. *raster* has handy functions for handling and viewing images, *sf* and *smoothr* help with handling the polygons, and *tidyverse* has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. Other packages needed for dependencies are *rgdal* and *rgeos*.
+The packages we load are all on CRAN. `raster` has handy functions for handling and viewing images, `sf` and `smoothr` help with handling the polygons, and `tidyverse` has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. Other packages needed for dependencies are `rgdal` and `rgeos`.
 
 ```{r message=FALSE}
 library(raster)
