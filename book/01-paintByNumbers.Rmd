@@ -156,7 +156,7 @@ st_img %>%
 
 This seems like a lot of polygons! We will have to iteratively tweak our simplifications.
 
-## Future expansions:
+## Future expansions
 
  * Consider using a machine learning classification approach?
 
