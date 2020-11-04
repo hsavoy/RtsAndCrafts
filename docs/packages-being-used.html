@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Packages being used | Rts and Crafts</title>
+  <meta name="description" content="4 Packages being used | Rts and Crafts" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Packages being used | Rts and Crafts" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="hsavoy/rtsAndCrafts" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Packages being used | Rts and Crafts" />
+  
+  
+  
+
+<meta name="author" content="H. Savoy" />
+
+
+<meta name="date" content="2020-11-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="randomPatterns.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="paintByNumbers.html"><a href="paintByNumbers.html"><i class="fa fa-check"></i><b>2</b> Auto-generating Paint-by-Numbers Instructions</a></li>
+<li class="chapter" data-level="3" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>3</b> Introduction</a></li>
+<li class="chapter" data-level="4" data-path="packages-being-used.html"><a href="packages-being-used.html"><i class="fa fa-check"></i><b>4</b> Packages being used</a><ul>
+<li class="chapter" data-level="4.1" data-path="packages-being-used.html"><a href="packages-being-used.html#step-1-reading-in-the-image"><i class="fa fa-check"></i><b>4.1</b> Step 1: Reading in the image</a></li>
+<li class="chapter" data-level="4.2" data-path="packages-being-used.html"><a href="packages-being-used.html#step-2-reducing-the-number-of-colors"><i class="fa fa-check"></i><b>4.2</b> Step 2: Reducing the number of colors</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="packages-being-used.html"><a href="packages-being-used.html#attempt-1-just-rounding-the-individual-rgb-values"><i class="fa fa-check"></i><b>4.2.1</b> Attempt 1: just rounding the individual RGB values</a></li>
+<li class="chapter" data-level="4.2.2" data-path="packages-being-used.html"><a href="packages-being-used.html#attempt-2-using-kmeans-clustering"><i class="fa fa-check"></i><b>4.2.2</b> Attempt 2: using kmeans clustering</a></li>
+<li class="chapter" data-level="4.2.3" data-path="packages-being-used.html"><a href="packages-being-used.html#attempt-3-specifying-a-palette-first"><i class="fa fa-check"></i><b>4.2.3</b> Attempt 3: specifying a palette first</a></li>
+<li class="chapter" data-level="4.2.4" data-path="packages-being-used.html"><a href="packages-being-used.html#step-3-converting-the-image-into-polygons-of-the-same-color"><i class="fa fa-check"></i><b>4.2.4</b> Step 3: Converting the image into polygons of the same color</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="randomPatterns.html"><a href="randomPatterns.html"><i class="fa fa-check"></i><b>5</b> Randomly Generating Patterns</a><ul>
+<li class="chapter" data-level="5.1" data-path="randomPatterns.html"><a href="randomPatterns.html#intro"><i class="fa fa-check"></i><b>5.1</b> Intro</a></li>
+<li class="chapter" data-level="5.2" data-path="randomPatterns.html"><a href="randomPatterns.html#packages-being-used-1"><i class="fa fa-check"></i><b>5.2</b> Packages being used</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="randomPatterns.html"><a href="randomPatterns.html#step-1-draw-the-backsplash-domain"><i class="fa fa-check"></i><b>5.2.1</b> Step 1: Draw the backsplash domain</a></li>
+<li class="chapter" data-level="5.2.2" data-path="randomPatterns.html"><a href="randomPatterns.html#step-2-randomly-placing-talavera-tiles"><i class="fa fa-check"></i><b>5.2.2</b> Step 2: Randomly placing talavera tiles</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tiltShift.html"><a href="tiltShift.html"><i class="fa fa-check"></i><b>6</b> Mimicking Tilt-Shift Photography</a><ul>
+<li class="chapter" data-level="6.1" data-path="tiltShift.html"><a href="tiltShift.html#intro-1"><i class="fa fa-check"></i><b>6.1</b> Intro</a></li>
+<li class="chapter" data-level="6.2" data-path="tiltShift.html"><a href="tiltShift.html#packages-being-used-2"><i class="fa fa-check"></i><b>6.2</b> Packages being used</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="tiltShift.html"><a href="tiltShift.html#step-1-read-in-the-image"><i class="fa fa-check"></i><b>6.2.1</b> Step 1: Read in the image</a></li>
+<li class="chapter" data-level="6.2.2" data-path="tiltShift.html"><a href="tiltShift.html#step-2-define-the-focal-area"><i class="fa fa-check"></i><b>6.2.2</b> Step 2: Define the focal area</a></li>
+<li class="chapter" data-level="6.2.3" data-path="tiltShift.html"><a href="tiltShift.html#step-3-apply-the-blurring-filter"><i class="fa fa-check"></i><b>6.2.3</b> Step 3: Apply the blurring filter</a></li>
+<li class="chapter" data-level="6.2.4" data-path="tiltShift.html"><a href="tiltShift.html#step-4-modifying-the-color-saturation"><i class="fa fa-check"></i><b>6.2.4</b> Step 4: Modifying the color saturation</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rts and Crafts</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="packages-being-used" class="section level1">
+<h1><span class="header-section-number">4</span> Packages being used</h1>
+<p>The packages we load are all on CRAN. <em>raster</em> has handy functions for handling and viewing images, <em>sf</em> and <em>smoothr</em> help with handling the polygons, and <em>tidyverse</em> has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. Other packages needed for dependencies are <em>rgdal</em> and <em>rgeos</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<span class="kw">library</span>(sf)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(smoothr)
+<span class="kw">library</span>(ggthemes)  <span class="co"># add to text above</span></code></pre></div>
+<div id="step-1-reading-in-the-image" class="section level2">
+<h2><span class="header-section-number">4.1</span> Step 1: Reading in the image</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">img &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="st">&quot;../images/byxbee_loaf.jpg&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">aggregate</span>(<span class="dv">10</span>) <span class="co"># reducing the resolution up front to save time</span>
+<span class="kw">plotRGB</span>(img)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="step-2-reducing-the-number-of-colors" class="section level2">
+<h2><span class="header-section-number">4.2</span> Step 2: Reducing the number of colors</h2>
+<div id="attempt-1-just-rounding-the-individual-rgb-values" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Attempt 1: just rounding the individual RGB values</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cutoff &lt;-<span class="st"> </span><span class="dv">75</span>  <span class="co"># number to rount to</span>
+rounded_img &lt;-<span class="st"> </span>img  <span class="co"># make a copy of the orignal image object</span>
+
+<span class="kw">values</span>(rounded_img) &lt;-<span class="st"> </span><span class="kw">values</span>(img)  %&gt;%<span class="st">  </span><span class="co"># extract values from image (strip spatial component)</span>
+<span class="st">  </span><span class="kw">as_tibble</span>() %&gt;%<span class="st"> </span><span class="co">#converting the matrix to tibble for tidy data manipulation</span>
+<span class="st">  </span><span class="kw">mutate_all</span>(~cutoff*<span class="kw">floor</span>(./cutoff)) %&gt;%<span class="st"> </span><span class="co"># overwrite all values to rounded down values to cutoff</span>
+<span class="st">  </span><span class="kw">as.matrix</span>() <span class="co"># convert back to matrix</span>
+
+<span class="kw">plotRGB</span>(rounded_img)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>Well it worked in that we can still see the cat and there are &lt;20 unique colors, but its not the ideal result.</p>
+</div>
+<div id="attempt-2-using-kmeans-clustering" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Attempt 2: using kmeans clustering</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">img_clust &lt;-<span class="st"> </span><span class="kw">values</span>(img) %&gt;%
+<span class="st">  </span><span class="kw">kmeans</span>(<span class="dv">15</span>, <span class="dt">iter.max =</span> <span class="dv">50</span>)
+centroids_img &lt;-<span class="st"> </span>img
+<span class="kw">values</span>(centroids_img) &lt;-<span class="st"> </span>img_clust$cluster  %&gt;%
+<span class="st">  </span><span class="kw">enframe</span>(<span class="dt">name =</span> <span class="ot">NULL</span>) %&gt;%
+<span class="st">  </span><span class="kw">left_join</span>(img_clust$centers %&gt;%<span class="st"> </span>
+<span class="st">              </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;value&quot;</span>) %&gt;%
+<span class="st">              </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">as.numeric</span>(value)))  %&gt;%
+<span class="st">  </span><span class="kw">mutate_all</span>(~<span class="kw">round</span>(.,<span class="dv">0</span>)) %&gt;%
+<span class="st">  </span><span class="kw">as.matrix</span>()
+
+<span class="kw">plotRGB</span>(centroids_img[[-<span class="dv">1</span>]]) <span class="co"># I&#39;m skipping the first layer that contains the cluster ID</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>That's a bit better. But what if we have a set palette we want to use?</p>
+</div>
+<div id="attempt-3-specifying-a-palette-first" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Attempt 3: specifying a palette first</h3>
+<p>I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the <a href="https://github.com/karthik/wesanderson">Wes Anderson pallete</a> or matching to paint sets to make painting the printed result more feasible.</p>
+</div>
+<div id="step-3-converting-the-image-into-polygons-of-the-same-color" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Step 3: Converting the image into polygons of the same color</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly_img &lt;-<span class="st"> </span><span class="kw">rasterToPolygons</span>(centroids_img$value,
+                             <span class="dt">digits =</span> <span class="dv">0</span>,
+                             <span class="dt">dissolve =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">st_img &lt;-<span class="st"> </span>poly_img %&gt;%
+<span class="st">  </span><span class="kw">st_as_sf</span>() %&gt;%
+<span class="st">  </span><span class="kw">st_buffer</span>(<span class="dv">5</span>) %&gt;%
+<span class="st">  </span><span class="kw">st_simplify</span>(<span class="ot">TRUE</span>,<span class="dt">dTolerance =</span> <span class="dv">15</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="co">#drop_crumbs(units::set_units(2)) %&gt;%</span>
+<span class="st">  </span><span class="kw">smooth</span>(<span class="dt">method =</span> <span class="st">&quot;ksmooth&quot;</span>, <span class="dt">smoothness =</span> <span class="fl">0.5</span>) 
+
+clust_cols &lt;-<span class="st"> </span>img_clust$centers %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;value&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hex =</span> <span class="kw">rgb</span>(byxbee_loaf<span class="fl">.1</span>/<span class="dv">255</span>,byxbee_loaf<span class="fl">.2</span>/<span class="dv">255</span>,byxbee_loaf<span class="fl">.3</span>/<span class="dv">255</span>)) %&gt;%
+<span class="st">  </span><span class="kw">pull</span>(hex)
+
+img_pal &lt;-<span class="st"> </span>function(n){
+  <span class="kw">return</span>(clust_cols[<span class="dv">1</span>:n])
+}
+
+<span class="co"># Try to visualize what the painting would look like</span>
+st_img %&gt;%
+<span class="st">  </span><span class="kw">plot</span>(<span class="dt">pal =</span> img_pal,<span class="dt">breaks=</span><span class="dv">0</span>:<span class="dv">15</span>,  <span class="co"># use the palette from the previous section</span>
+       <span class="dt">border =</span> <span class="ot">NA</span>,  <span class="co"># no polygon outlines </span>
+       <span class="dt">key.pos=</span><span class="ot">NULL</span>, <span class="co"># no legend</span>
+       <span class="dt">main =</span> <span class="ot">NULL</span>)  <span class="co"># no title</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to <code>ggplot</code> plotting because it's easier to customize visualizations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() +
+<span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">fill =</span> <span class="ot">NA</span>,
+       <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+       <span class="dt">data =</span> st_img) +
+<span class="st">  </span><span class="kw">theme_map</span>()  <span class="co"># no axes or anything like that</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Future expansions:</p>
+<ul>
+<li><p>Have an option to split skinny images (e.g. panoramic photos) into multiple pages of instructions, which would be helpful for breaking up mural instructions</p></li>
+<li><p>Have an option to have a grid included on the instructions in case people need to transfer the outlines to a large area, e.g. a wall for a mural</p></li>
+<li><p>Have an option to fit a custom piece of paper</p></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="randomPatterns.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/hsavoy/RtsAndCrafts/edit/master/01-paintByNumbers.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/hsavoy/RtsAndCrafts/blob/master/01-paintByNumbers.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

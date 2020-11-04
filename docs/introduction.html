@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rts and Crafts</title>
-  <meta name="description" content="Rts and Crafts" />
+  <title>3 Introduction | Rts and Crafts</title>
+  <meta name="description" content="3 Introduction | Rts and Crafts" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rts and Crafts" />
+  <meta property="og:title" content="3 Introduction | Rts and Crafts" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="hsavoy/rtsAndCrafts" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rts and Crafts" />
+  <meta name="twitter:title" content="3 Introduction | Rts and Crafts" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="paintByNumbers.html"/>
+<link rel="prev" href="paintByNumbers.html"/>
+<link rel="next" href="packages-being-used.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -149,23 +149,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rts and Crafts</h1>
-<p class="author"><em>H. Savoy</em></p>
-<p class="date"><em>2020-11-03</em></p>
-</div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">1</span> Preface</h1>
-<p>This book catalogs different art projects that have been augmented (or overly-complicated?) by R. Many ideas come from conversations at the monthly Las Cruces/El Paso RLadies meetings. Hit me up if you want to join in. All code (including this book!) is available at hsavoy/rtsAndCrafts.</p>
-
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">3</span> Introduction</h1>
+<p>This project aims to convert an image (e.g., of my cat) into paint-by-number instructions. This involves:</p>
+<ul>
+<li><p>reducing the number of colors down to a reasonable number, i.e. reducing the 16+ million colors possible with 8-bit images down to like 10-15,</p></li>
+<li><p>converting raster data into polygons based on those limited colors, and</p></li>
+<li><p>saving those resulting polygons with their color IDs as printable and readable instructions.</p></li>
+</ul>
+<p>This document follows the adventure of getting it all to work.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="paintByNumbers.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="paintByNumbers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="packages-being-used.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -196,7 +196,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/hsavoy/RtsAndCrafts/edit/master/index.Rmd",
+"link": "https://github.com/hsavoy/RtsAndCrafts/edit/master/01-paintByNumbers.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -204,7 +204,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/hsavoy/RtsAndCrafts/blob/master/index.Rmd",
+"link": "https://github.com/hsavoy/RtsAndCrafts/blob/master/01-paintByNumbers.Rmd",
 "text": null
 },
 "download": null,

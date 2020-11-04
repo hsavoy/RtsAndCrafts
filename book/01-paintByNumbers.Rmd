@@ -1,6 +1,6 @@
 # Auto-generating Paint-by-Numbers Instructions {#paintByNumbers}
 
-## Intro
+# Introduction
 
 This project aims to convert an image (e.g., of my cat) into paint-by-number instructions. This involves:
 
@@ -12,18 +12,19 @@ This project aims to convert an image (e.g., of my cat) into paint-by-number ins
 
 This document follows the adventure of getting it all to work.
 
-## Packages being used
+# Packages being used
 
-The packages we load are all on CRAN. *raster* has handy functions for handling and viewing images, *sf* and *smoothr* help with handling the polygons, and *tidyverse* has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. 
+The packages we load are all on CRAN. *raster* has handy functions for handling and viewing images, *sf* and *smoothr* help with handling the polygons, and *tidyverse* has general grammar for tidy data manipulation. Disclaimer: there are probably more packages out there that do similar things, but I'm coming from a geospatial day job and I'm using these packages since there are already familiar to me. Other packages needed for dependencies are *rgdal* and *rgeos*.
 
 ```{r message=FALSE}
 library(raster)
 library(sf)
 library(tidyverse)
 library(smoothr)
+library(ggthemes)  # add to text above
 ```
 
-### Step 1: Reading in the image
+## Step 1: Reading in the image
 
 ```{r }
 img <- brick("../images/byxbee_loaf.jpg") %>% 
@@ -31,9 +32,9 @@ img <- brick("../images/byxbee_loaf.jpg") %>%
 plotRGB(img)
 ```
 
-### Step 2: Reducing the number of colors
+## Step 2: Reducing the number of colors
 
-##### Attempt 1: just rounding the individual RGB values
+### Attempt 1: just rounding the individual RGB values
 
 ```{r}
 cutoff <- 75  # number to rount to
@@ -49,7 +50,7 @@ plotRGB(rounded_img)
 
 Well it worked in that we can still see the cat and there are <20 unique colors, but its not the ideal result. 
 
-##### Attempt 2: using kmeans clustering 
+### Attempt 2: using kmeans clustering 
 ```{r message=FALSE, warning=FALSE}
 img_clust <- values(img) %>%
   kmeans(15, iter.max = 50)
@@ -67,7 +68,7 @@ plotRGB(centroids_img[[-1]]) # I'm skipping the first layer that contains the cl
 
 That's a bit better. But what if we have a set palette we want to use? 
 
-##### Attempt 3: specifying a palette first
+### Attempt 3: specifying a palette first
 
 I haven't tried this yet, but the plan is to see if we can split the colors from the image into a pre-defined set of colors. Maybe cool ones like the [Wes Anderson pallete](https://github.com/karthik/wesanderson) or matching to paint sets to make painting the printed result more feasible. 
 
@@ -103,12 +104,13 @@ st_img %>%
        main = NULL)  # no title
 ```
 
-So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to *ggplot* plotting because it's easier to customize visualizations.
+So now we need to print the instructions and make sure they are readable on a standard printer paper to make things easy for people. I'm switching to `ggplot` plotting because it's easier to customize visualizations.
 ```{r}
 ggplot() +
   geom_sf(fill = NA,
        color = "black",
-       data = st_img)
+       data = st_img) +
+  theme_map()  # no axes or anything like that
 ```
 
 Future expansions:

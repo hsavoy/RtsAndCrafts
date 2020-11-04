@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rts and Crafts</title>
-  <meta name="description" content="Rts and Crafts" />
+  <title>5 Randomly Generating Patterns | Rts and Crafts</title>
+  <meta name="description" content="5 Randomly Generating Patterns | Rts and Crafts" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rts and Crafts" />
+  <meta property="og:title" content="5 Randomly Generating Patterns | Rts and Crafts" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="hsavoy/rtsAndCrafts" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rts and Crafts" />
+  <meta name="twitter:title" content="5 Randomly Generating Patterns | Rts and Crafts" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="paintByNumbers.html"/>
+<link rel="prev" href="packages-being-used.html"/>
+<link rel="next" href="tiltShift.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -149,23 +149,70 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rts and Crafts</h1>
-<p class="author"><em>H. Savoy</em></p>
-<p class="date"><em>2020-11-03</em></p>
+<div id="randomPatterns" class="section level1">
+<h1><span class="header-section-number">5</span> Randomly Generating Patterns</h1>
+<div id="intro" class="section level2">
+<h2><span class="header-section-number">5.1</span> Intro</h2>
+<p>I'd like to re-do the backsplash in my kitchen. It's ok tile, but it's a lot of beige. I'd prefer some talavera tiles sprinkled in with white tiles. I'd like to have it be more random than a structured pattern, so I'm going to write some code to randomly generate the location of the colorful tiles. I'm also undecided about the relative size of the tiles I'd want, so I'll play with that here, too.</p>
+<p>The area is like a tophat shape with two short rectangles on each side a taller and more square shape in the center. I'm going to assume that I only want square tiles so I'll be using rasters to represent the tiles. I just won't be able to visualize grout this way.</p>
+<p>Does sf have gridded geometry?</p>
+<p>I'm going to start with the idea that these are all 1 in tiles and that grout is negligible thinkness. The area is 10 ft long with the first 3.5 ft being 2 ft tall, the next 3 ft being 3 ft tall, and the final 3.5 ft being 2 ft all.</p>
+<p>Insert picture of kitchen here with red or blue lines marking dimensions</p>
 </div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">1</span> Preface</h1>
-<p>This book catalogs different art projects that have been augmented (or overly-complicated?) by R. Many ideas come from conversations at the monthly Las Cruces/El Paso RLadies meetings. Hit me up if you want to join in. All code (including this book!) is available at hsavoy/rtsAndCrafts.</p>
+<div id="packages-being-used-1" class="section level2">
+<h2><span class="header-section-number">5.2</span> Packages being used</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<span class="kw">library</span>(sf)</code></pre></div>
+<div id="step-1-draw-the-backsplash-domain" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Step 1: Draw the backsplash domain</h3>
+<p>For sanity's sake, we will consider the bottom left of the backsplash as the origin in our coordinate system.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">backsplash_length &lt;-<span class="st"> </span><span class="dv">10</span>*<span class="dv">12</span>
+backsplash_height &lt;-<span class="st"> </span><span class="dv">3</span>*<span class="dv">12</span>
 
+backsplash &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> backsplash_height, 
+                     <span class="dt">ncols =</span> backsplash_length, 
+                     <span class="dt">xmn =</span> <span class="dv">0</span>,
+                     <span class="dt">xmx =</span> backsplash_length,
+                     <span class="dt">ymn =</span> <span class="dv">0</span>,
+                     <span class="dt">ymx =</span> backsplash_height,
+                     <span class="dt">crs =</span> <span class="ot">NA</span>,
+                     <span class="dt">vals =</span> <span class="dv">1</span>) 
+
+<span class="co"># Where are my cabinets?</span>
+cabinet_bottom &lt;-<span class="st"> </span><span class="dv">2</span>*<span class="dv">12</span> <span class="co"># 2 ft, at what height the cabinets start</span>
+cabinet_width &lt;-<span class="st"> </span><span class="fl">3.5</span>*<span class="dv">12</span> <span class="co"># 3.5 ft, how wide the cabinets are</span>
+cabinet_spacing &lt;-<span class="st"> </span><span class="dv">3</span>*<span class="dv">12</span> <span class="co"># 3 ft, space in between cabinets</span>
+
+<span class="co"># Let&#39;s make some intermediate variables just to make the logic clearer</span>
+tile_x &lt;-<span class="st"> </span><span class="kw">coordinates</span>(backsplash)[,<span class="dv">1</span>]
+tile_y &lt;-<span class="st"> </span><span class="kw">coordinates</span>(backsplash)[,<span class="dv">2</span>]
+
+<span class="kw">values</span>(backsplash)[ (tile_x &lt;<span class="st"> </span>cabinet_width |<span class="st"> </span>
+<span class="st">                       </span>tile_x &gt;<span class="st"> </span>cabinet_width+cabinet_spacing) &amp;<span class="st"> </span>
+<span class="st">                      </span>tile_y &gt;<span class="st"> </span>cabinet_bottom ] &lt;-<span class="st"> </span><span class="ot">NA</span>
+
+<span class="kw">plot</span>(backsplash)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="step-2-randomly-placing-talavera-tiles" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Step 2: Randomly placing talavera tiles</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How many tiles I want?</span>
+N_talavera &lt;-<span class="st"> </span><span class="dv">2</span>*<span class="dv">12</span>   <span class="co"># let&#39;s say packages come in by the dozen and I get two</span>
+
+tala_x &lt;-<span class="st"> </span><span class="kw">runif</span>(N_talavera*<span class="dv">2</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> backsplash_length) %&gt;%<span class="st"> </span><span class="kw">floor</span>()
+tala_y &lt;-<span class="st"> </span><span class="kw">runif</span>(N_talavera*<span class="dv">2</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> backsplash_height) %&gt;%<span class="st"> </span><span class="kw">floor</span>()</code></pre></div>
+<p>How do you do that code in another script thing and I just pull in named chunks here?</p>
+
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="paintByNumbers.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="packages-being-used.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tiltShift.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -196,7 +243,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/hsavoy/RtsAndCrafts/edit/master/index.Rmd",
+"link": "https://github.com/hsavoy/RtsAndCrafts/edit/master/02-randomPatterns.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -204,7 +251,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/hsavoy/RtsAndCrafts/blob/master/index.Rmd",
+"link": "https://github.com/hsavoy/RtsAndCrafts/blob/master/02-randomPatterns.Rmd",
 "text": null
 },
 "download": null,
